@@ -1,0 +1,31 @@
+services:
+  cache:
+    image: caching-proxies-cache:latest
+    container_name: caching-proxies-cache-testnet
+    pull_policy: never
+    command:
+      - "./app/app"
+      - "-shard-prefix=shards"
+      - "-shards-to-listen=1,2,3,4"
+      - "-creds=config/testnet.creds"
+      - "-server=nats://rpc-speedup-nats.testnet.aurora.dev"
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped
+    ports:
+      - "1324:1324"
+
+  terminal:
+    image: caching-proxies-terminal:latest
+    container_name: caching-proxies-terminal-testnet
+    pull_policy: never
+    command:
+      - "./app/app"
+      - "-server=nats://rpc-speedup-nats.testnet.aurora.dev"
+      - "-submissions-verifier-host=https://rpc-speedup-verifier.testnet.aurora.dev/authenticate"
+      - "-shard-prefix=shards"
+    volumes:
+      - ./config:/app/config
+    restart: unless-stopped
+    ports:
+      - "1323:1323"

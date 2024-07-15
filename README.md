@@ -31,7 +31,7 @@ services:
     command:
       - "./app/app"
       - "-shard-prefix=shards"
-      - "-shards-to-listen=1,2,3,4"
+      - "-shards-to-listen=1,2,3,4,5,6"
       - "-creds=config/testnet.creds"
       - "-server=nats://rpc-speedup-nats.testnet.aurora.dev"
     volumes:
